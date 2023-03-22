@@ -1,0 +1,40 @@
+#!/bin/bash
+# Enter container shell or send shell command to container
+#
+# Examples:
+#
+# docker/shell             # Enter bash shell in development web container:
+# docker/shell ls          # Run command directly
+# docker/shell -s api ls   # Run command in api container
+# docker/shell -e prod     # Target production containers
+# docker/shell -d build    # Run web build in a detached container
+#
+# See .bashrc files for relevant commands to run
+#
+docker="$LITEFARM_DOCKER_CLI_DIR"
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+service=$LITEFARM_DOCKER_DEFAULT_SERVICE
+detached=false
+fallback=false
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-s")
+    service=$2 && shift 2;;
+  "-d")
+    detached=true && shift;;
+  "-f") # fallback to container shell after command exit
+    fallback=true && shift;;
+  esac
+done
+
+$detached && cmd=(run --rm) || cmd=(exec)
+cmd+=(-it $service /bin/bash)
+
+if [[ -n "$*" ]]; then 
+  $fallback && cmd+=(-ci "$*; exec bash") || cmd+=(-ci "$*")
+fi
+
+"$docker/compose" -e $env -a "${cmd[@]}"

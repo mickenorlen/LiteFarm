@@ -1,0 +1,6 @@
+services:
+  api:
+    command: /root/scripts/idle.sh
+
+  web:
+    command: /root/scripts/idle.sh

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# LiteFarm cli 
+#
+# To start using the cli, add below to your shell startup file
+# eg ~/.bashrc or ~/.zshrc. Also check config.sh to see if you want to modify config.
+#
+# source /path/to/LiteFarm/cli/cli.sh
+# alias lf=_litefarm_cli # you can chose any name you like
+# export LITEFARM_DOCKER_START_ADMINER=true # modify config example
+#
+# Then reload your shell and try eg: "lf help"
+# To integrate your own commands, see default_commands.sh
+#
+source "$(dirname "$0")/config.sh"
+source "$LITEFARM_CLI_DIR/helpers.sh"
+
+source "$LITEFARM_CLI_COMMANDS_PATH" "$@" || \
+source "$LITEFARM_CLI_DIR/core_commands.sh" "$@" || \
+fallback_to_docker_scripts "$@"
+

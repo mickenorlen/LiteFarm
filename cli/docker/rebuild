@@ -1,0 +1,30 @@
+#!/bin/bash
+# Rebuild docker images
+# as all data should be persisted through mounted system volumes.
+# Note that containers have to be stopped first, docker/stop
+#
+# Examples:
+#
+# docker/rm               # Rm all containers
+# docker/rm -s api -s db  # Rm api and db container
+# docker/rm -e prod       # Target production containers
+#
+docker="$LITEFARM_DOCKER_CLI_DIR"
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+prune=true
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-s")
+    services+=("$2") && shift 2;;
+  "+p")
+    prune=false
+  esac
+done
+
+# Building through startup ensures containers attach to new images
+"$docker/compose" -e $env -a up -d --no-deps --build "${services[@]}"
+# Remove any dangeling images, should always be safe and wanted
+$prune && docker image prune -f

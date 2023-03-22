@@ -1,0 +1,55 @@
+#!/bin/bash
+# Start containers, consider using dev for development
+#
+# Examples:
+#
+# docker/start               # Start all containers
+# docker/start -s api -s db   # Start api and db service
+# docker/start -e prod        # Target production containers
+# docker/start -a             # Start with adminer sql tool at localhost:8080
+# docker/start -i             # Start idle_able services in idle mode (see docker-compose.idle.yml)
+#
+docker="$LITEFARM_DOCKER_CLI_DIR"
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+adminer=$LITEFARM_DOCKER_START_ADMINER
+idle=false
+restart=false
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-s")
+    services+=("$2") && shift 2;;
+  "-i")
+    idle=true; compose_flags+=(-i) && shift;;
+  "-a")
+    adminer=true && shift;;
+  "-r")
+    restart=true && shift;;
+  esac
+done
+
+$adminer && compose_flags+=(-a)
+compose=($("$docker/compose" -e $env ${compose_flags[@]}))
+[[ -z "${services[@]}" ]] && services=($("${compose[@]}" config --services))
+
+if $restart; then
+  "$docker/stop" -e $env $(printf -- " -s %s" "${services[@]}")
+  start_services=("${services[@]}") 
+else
+  # Selective startup given state prevents recreation of already properly started containers
+  active_services=($("${compose[@]}" ps --services))
+
+  for service in "${services[@]}"; do
+    # If not running or supposed to be idle and isn't
+    if [[ ! " ${active_services[@]} " =~ " $service " ]] || \
+      ($idle && ! "$docker/logs" -e $env -s $service +f | grep -q "Started idle"); then
+      start_services+=($service)
+    fi
+  done
+fi
+
+if [[ -n ${start_services[@]} ]]; then
+  "${compose[@]}" up -d "${start_services[@]}"
+fi

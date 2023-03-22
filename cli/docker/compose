@@ -1,0 +1,39 @@
+#!/bin/bash
+# Run project compose command 
+#
+# Example: 
+# Run a compose command
+#   docker/compose -a -i ps
+#   docker/compose config
+#
+# If called without a command, it returns the compose command itself
+#   docker/compose -a -i
+#   docker/compose
+docker="$LITEFARM_DOCKER_CLI_DIR"
+repo="$LITEFARM_REPO_PATH"
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+adminer=$LITEFARM_DOCKER_START_ADMINER
+idle=false
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-a")
+    adminer=true && shift;;
+  "-i")
+    idle=true && shift;;
+  esac
+done
+
+cmd=(docker-compose --env-file "$repo/packages/api/.env" -f "$repo/docker-compose.$env.yml")
+$adminer && cmd+=(-f "$repo/docker-compose.adminer.yml")
+$idle && cmd+=(-f "$repo/docker-compose.idle.yml")
+
+if [[ -n "$@" ]]; then
+  # Run command directly if provided
+  "${cmd[@]}" "$@"
+else
+  # Otherwise echo command
+  echo "${cmd[@]}"
+fi
