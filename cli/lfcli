@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# LiteFarm cli 
+#
+# Run with eg: cli/lfcli help
+# For more information, see README.md, config.sh, default_commands.sh
+#
+source "$(dirname "$0")/config.sh"
+source "$LITEFARM_CLI_DIR/help.sh"
+source "$LITEFARM_CLI_DIR/text.sh"
+
+# Run command if found, otherwise try next
+if [[ -n "$LITEFARM_CLI_USER_COMMANDS_PATH" ]]; then
+  source "$LITEFARM_CLI_USER_COMMANDS_PATH" "$@"
+else
+  $(exit 123)
+fi
+[[ $? == 123 ]] && source "$LITEFARM_CLI_DIR/core_commands.sh" "$@"
+[[ $? == 123 ]] && source "$LITEFARM_CLI_DIR/docker_commands.sh" "$@"
