@@ -1,0 +1,62 @@
+#!/bin/bash
+# Start development with web or api server cmd in foreground
+#
+# If the server command is stopped or dies unexpectedly,
+# the process falls back to the container shell where you can simply call
+# "serve" again to restart the server. You can also call eg: "install" as needed.
+#
+# Examples:
+#
+# dev           # Start developing with web server in foreground
+# dev -s api    # Start developing with api server in foreground
+# dev -a        # Start developing web, including adminer sql tool at localhost:8080
+#
+# If you need to follow multiple logs, you can open up multiple terminals. See examples below
+#
+# T1: dev          # Adding "-i api" here will leave api waiting idle, which would make
+#                  # the next T2 command faster as the api container wont need to be recreated
+# T2: dev -s api   # You could also use logs -s api. But the log won't be interactive.
+# T3: logs -s db   # Example of logging a container
+#
+docker="$LITEFARM_DOCKER_CLI_DIR"
+dev_able_services=(web api)
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+fg_service=$LITEFARM_DOCKER_DEFAULT_SERVICE
+adminer=$LITEFARM_DOCKER_START_ADMINER
+restart=false
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-s")
+    fg_service=$2 && shift 2;;
+  "-i")
+    idle_services+=($2) && shift 2;;
+  "-a")
+    adminer=true && shift;;
+  "-r")
+    restart=true && shift;
+  esac
+done
+
+$adminer && compose_flags+=(-a)
+idle_services+=($fg_service)
+all_services=($("$docker/compose" -e $env ${compose_flags[@]} config --services))
+# https://stackoverflow.com/questions/2312762/compare-difference-of-two-arrays-in-bash
+bg_services=($(echo ${all_services[@]} ${idle_services[@]} | tr ' ' '\n' | sort | uniq -u))
+
+$restart && "$docker/stop" -e $env
+
+# Start bg services
+if [[ -n "${bg_services[@]}" ]]; then
+  "$docker/start" -e $env -a $(printf -- " -s %s" "${bg_services[@]}")
+fi
+
+# Start idle services
+if [[ -n "${idle_services[@]}" ]]; then
+  "$docker/start" -i -e $env -a $(printf -- " -s %s" "${idle_services[@]}")
+fi
+
+# Start foreground service
+"$docker/sh" -e $env -s $fg_service -f 'serve -f'

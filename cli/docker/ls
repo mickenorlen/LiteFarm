@@ -1,0 +1,5 @@
+#!/bin/bash
+# List containers and images
+docker ps -a
+echo
+docker images

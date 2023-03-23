@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# LiteFarm cli 
+#
+# Run with eg: cli/lfcli help
+# For more information, see README.md, config.sh, default_commands.sh
+#
+source "$(dirname "$0")/config.sh"
+source "$LITEFARM_CLI_DIR/helpers.sh"
+source "$LITEFARM_CLI_DIR/text.sh"
+
+source "$LITEFARM_CLI_COMMANDS_PATH" "$@" || \
+source "$LITEFARM_CLI_DIR/core_commands.sh" "$@" || \
+fallback_to_docker_scripts "$@"
+
