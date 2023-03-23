@@ -25,13 +25,12 @@ LiteFarm is comprised of three applications which all reside in this monorepo.
 Start developing quickly with `docker-compose`.
 
 1. Install docker and start the docker service https://docs.docker.com/get-docker/
-2. Fork LiteFarm (recommended): https://github.com/LiteFarmOrg/LiteFarm
+2. Fork LiteFarm (recommended) https://github.com/LiteFarmOrg/LiteFarm
    - Otherwise `git clone git@github.com:LiteFarmOrg/LiteFarm.git` 
 3. Clone your fork: `git clone git@github.com:me/LiteFarm.git`
 
 ```BASH
 cd LiteFarm
-
 git remote add upstream git@github.com:LiteFarmOrg/LiteFarm.git
 
 cp packages/api/.env.default packages/api/.env

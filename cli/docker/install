@@ -24,5 +24,5 @@ done
 
 for service in "${services[@]}"; do
   echo -e "Installing $service\n"
-  "$docker/sh" -e $env -s $service install
+  "$docker/sh" -e $env -s $service -d install
 done
