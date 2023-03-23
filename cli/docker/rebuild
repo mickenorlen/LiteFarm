@@ -1,13 +1,12 @@
 #!/bin/bash
 # Rebuild docker images
-# as all data should be persisted through mounted system volumes.
-# Note that containers have to be stopped first, docker/stop
+# Will prune old dangeling images after by default
 #
 # Examples:
 #
-# docker/rm               # Rm all containers
-# docker/rm -s api -s db  # Rm api and db container
-# docker/rm -e prod       # Target production containers
+# rebuild          # Rebuild all containers
+# rebuild -s api   # Rebuild api
+# rebuild -e prod  # Target production containers
 #
 docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV

@@ -3,9 +3,9 @@
 #
 # Examples:
 #
-# docker/stop               # Stop all containers
-# docker/stop -s api -s db  # Stop api and db service
-# docker/stop -e prod       # Target production containers
+# stop               # Stop all containers
+# stop -s api -s db  # Stop api and db service
+# stop -e prod       # Target production containers
 #
 docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV

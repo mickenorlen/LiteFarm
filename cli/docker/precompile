@@ -3,12 +3,13 @@
 #
 # Examples:
 #
-# docker/precompile          # Precompile assets for web
-# docker/precompile -e prod  # Target production containers
+# precompile          # Precompile assets for web
+# precompile -e prod  # Target production containers
 #
+source "$LITEFARM_CLI_DIR/text.sh"
 docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV
-build_able_services=(web)
+able_services=(web)
 
 for arg in "$@"; do
   case $arg in
@@ -17,7 +18,8 @@ for arg in "$@"; do
   esac
 done
 
-for service in "${build_able_services[@]}"; do
-  echo -e "Building $service\n"
+for service in "${able_services[@]}"; do
+  [[ $service != ${able_services[0]} ]] && echo
+  title "Precompiling $service"
   "$docker/sh" -e $env -s $service -d build
 done

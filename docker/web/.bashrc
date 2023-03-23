@@ -22,7 +22,7 @@ install() { # Install dependencies
   pnpm install;
 }
 
-build() { # Build assets
+precompile() { # Precompile assets
   pnpm run build; 
 }
 

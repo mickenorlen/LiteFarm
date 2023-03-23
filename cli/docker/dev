@@ -7,16 +7,16 @@
 #
 # Examples:
 #
-# docker/dev          # Start developing with web server in foreground
-# docker/dev -s api   # Start developing with api server in foreground
-# docker/dev -a       # Start developing web, including adminer sql tool at localhost:8080
+# dev           # Start developing with web server in foreground
+# dev -s api    # Start developing with api server in foreground
+# dev -a        # Start developing web, including adminer sql tool at localhost:8080
 #
 # If you need to follow multiple logs, you can open up multiple terminals. See examples below
 #
-# T1: docker/dev          # Adding "-i api" here will leave api waiting idle, which would make
-#                         # the next T2 command faster as the api container wont need to be recreated
-# T2: docker/dev -s api   # You could also use docker/logs -s api. But the log won't be interactive.
-# T3: docker/logs -s db   # Example of logging a container
+# T1: dev          # Adding "-i api" here will leave api waiting idle, which would make
+#                  # the next T2 command faster as the api container wont need to be recreated
+# T2: dev -s api   # You could also use logs -s api. But the log won't be interactive.
+# T3: logs -s db   # Example of logging a container
 #
 docker="$LITEFARM_DOCKER_CLI_DIR"
 dev_able_services=(web api)

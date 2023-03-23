@@ -1,17 +1,16 @@
 #!/bin/bash
 # Show container logs
-# Note that when containers are started idle, eg when using docker/dev. 
+# Note that when containers are started idle, eg when using "dev". 
 # The log will only show "Started idle".
 # Relevant logs will instead be shown directly in the foreground process.
 #
 # Examples:
 #
-# docker/logs          # follow logs of web
-# docker/logs -s api   # follow logs of api
-# docker/logs -e prod  # Target production containers
+# logs          # follow logs of web
+# logs -s api   # follow logs of api
+# logs -e prod  # Target production containers
 #
-docker="$(dirname "$0")"
-
+docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV
 service=$LITEFARM_DOCKER_DEFAULT_SERVICE
 follow=true

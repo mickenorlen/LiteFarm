@@ -35,7 +35,7 @@ services:
     environment:
       SERVER_PORT: 5001
       WAIT_HOSTS: litefarm-db:5432
-      NODE_ENV: integration
+      NODE_ENV: $NODE_ENV
       DEV_DATABASE_HOST: db
       DEV_DATABASE: ${DEV_DATABASE}
       DEV_DATABASE_USER: ${DEV_DATABASE_USER}

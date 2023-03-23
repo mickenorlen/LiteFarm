@@ -3,12 +3,12 @@
 #
 # Example: 
 # Run a compose command
-#   docker/compose -a -i ps
-#   docker/compose config
+#   compose -a -i ps
+#   compose config
 #
 # If called without a command, it returns the compose command itself
-#   docker/compose -a -i
-#   docker/compose
+#   compose -a -i
+#   compose
 docker="$LITEFARM_DOCKER_CLI_DIR"
 repo="$LITEFARM_REPO_PATH"
 env=$LITEFARM_DOCKER_DEFAULT_ENV

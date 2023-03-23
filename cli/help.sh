@@ -4,11 +4,11 @@ show_help() {
   local indent=" "
   local msg=()
 
-  msg+="$(title "User commands" "- $LITEFARM_CLI_COMMANDS_PATH" )"
+  msg+="$(title "User commands" "- $LITEFARM_CLI_COMMANDS_PATH" )\n"
   msg+="$(help_commands "$LITEFARM_CLI_COMMANDS_PATH" $separation $indent)"
-  msg+="$(title "Core cli helpers")"
+  msg+="$(title "Core cli helpers")\n"
   msg+="$(help_commands "$LITEFARM_CLI_DIR/core_commands.sh" $separation $indent)"
-  msg+="$(title "Core docker scripts")"
+  msg+="$(title "Core docker scripts")\n"
   msg+="$(help_docker $separation $indent)"
 
   echo -e "${msg[*]}"

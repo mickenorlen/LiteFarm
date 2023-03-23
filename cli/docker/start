@@ -3,11 +3,11 @@
 #
 # Examples:
 #
-# docker/start               # Start all containers
-# docker/start -s api -s db   # Start api and db service
-# docker/start -e prod        # Target production containers
-# docker/start -a             # Start with adminer sql tool at localhost:8080
-# docker/start -i             # Start idle_able services in idle mode (see docker-compose.idle.yml)
+# start                # Start all containers
+# start -s api -s db   # Start api and db service
+# start -e prod        # Target production containers
+# start -a             # Start with adminer sql tool at localhost:8080
+# start -i             # Start in idle mode (see docker-compose.idle.yml)
 #
 docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV

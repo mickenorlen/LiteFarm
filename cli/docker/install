@@ -1,15 +1,16 @@
 #!/bin/bash
-# Run detached install scripts for web and/or api containers
+# Run detached container install scripts
 #
 # Examples:
 #
-# docker/install          # Run install scripts for web and api
-# docker/install -s api   # Run installs in api only
-# docker/install -e prod  # Target production containers
+# install          # Run install scripts for web and api
+# install -s api   # Run installs in api only
+# install -e prod  # Target production containers
 #
+source "$LITEFARM_CLI_DIR/text.sh"
 docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV
-install_able_services=(web api)
+able_services=(web api)
 
 for arg in "$@"; do
   case $arg in
@@ -20,9 +21,10 @@ for arg in "$@"; do
   esac
 done
 
-[[ -z "${services[@]}" ]] && services=("${install_able_services[@]}")
+[[ -z "${services[@]}" ]] && services=("${able_services[@]}")
 
 for service in "${services[@]}"; do
-  echo -e "Installing $service\n"
+  [[ $service != ${services[0]} ]] && echo
+  title "Installing $service"
   "$docker/sh" -e $env -s $service -d install
 done

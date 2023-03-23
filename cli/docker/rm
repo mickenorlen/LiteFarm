@@ -1,12 +1,12 @@
 #!/bin/bash
 # Remove containers, safe as data is persisted through system volumes
-# Note that containers have to be stopped first, docker/stop
+# Note that containers have to be stopped first, see "stop"
 #
 # Examples:
 #
-# docker/rm               # Rm all containers
-# docker/rm -s api -s db  # Rm api and db container
-# docker/rm -e prod       # Target production containers
+# rm               # Rm all containers
+# rm -s api -s db  # Rm api and db container
+# rm -e prod       # Target production containers
 #
 docker="$LITEFARM_DOCKER_CLI_DIR"
 env=$LITEFARM_DOCKER_DEFAULT_ENV

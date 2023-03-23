@@ -3,11 +3,13 @@
 #
 # Examples:
 #
-# docker/shell             # Enter bash shell in development web container:
-# docker/shell ls          # Run command directly
-# docker/shell -s api ls   # Run command in api container
-# docker/shell -e prod     # Target production containers
-# docker/shell -d build    # Run web build in a detached container
+# sh             # Enter bash shell in development web container:
+# sh ls          # Run command directly
+# sh -s api ls   # Run command in api container
+# sh help        # Show custom web container commands
+# sh -s api help # Show custom api container commands
+# sh -d ls       # Run command in a detached container
+# sh -e prod     # Target production containers
 #
 # See .bashrc files for relevant commands to run
 #
