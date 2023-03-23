@@ -1,0 +1,24 @@
+#!/bin/bash
+# Remove containers, safe as data is persisted through system volumes
+# Note that containers have to be stopped first, see "stop"
+#
+# Examples:
+#
+# rm               # Rm all containers
+# rm -s api -s db  # Rm api and db container
+# rm -e prod       # Target production containers
+#
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-s")
+    services+=("$2") && shift 2;;
+  "-f")
+    rm_flags+=(-f)
+  esac
+done
+
+lfcli compose -e $env -a rm "${rm_flags[@]}" "${services[@]}"

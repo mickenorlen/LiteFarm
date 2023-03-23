@@ -1,0 +1,32 @@
+#!/bin/bash
+# Rebuild docker images
+# Will prune old dangeling images afterwards by default
+#
+# Examples:
+#
+# rebuild          # Rebuild all containers
+# rebuild -s api   # Rebuild api
+# rebuild -e prod  # Target production containers
+#
+env=$LITEFARM_DOCKER_DEFAULT_ENV
+prune=true
+
+for arg in "$@"; do
+  case $arg in
+  "-e")
+    env=$2 && shift 2;;
+  "-s")
+    services+=("$2") && shift 2;;
+  "+p")
+    prune=false
+  esac
+done
+
+# Building through startup ensures containers attach to new images
+cmd=(lfcli compose)
+[[ $env == development ]] && cmd+=(-i) # containers work from idle state in dev
+cmd+=(-e $env -a up -d --no-deps --build "${services[@]}")
+"${cmd[@]}"
+
+# Remove any dangeling images, should always be safe and wanted
+$prune && docker image prune -f
