@@ -32,7 +32,6 @@ Start developing quickly with `docker-compose`.
 ```BASH
 cd LiteFarm
 git remote add upstream git@github.com:LiteFarmOrg/LiteFarm.git
-
 cp packages/api/.env.default packages/api/.env
 cp packages/webapp/.env.default packages/webapp/.env
 # Add missing api keys to .env files as needed
