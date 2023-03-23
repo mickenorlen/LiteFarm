@@ -21,3 +21,5 @@ packages/webapp/vite.config.ts.timestamp*
 ngrok/ngrok.yml
 
 docker/data/
+cli/.env
+cli/untracked/
