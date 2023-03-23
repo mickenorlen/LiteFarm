@@ -16,6 +16,7 @@ packages/webapp/cypress.env.json
 .env
 packages/webapp/cypress/integration/1-getting-started
 packages/webapp/cypress/integration/2-advanced-examples
+packages/webapp/.pnpm-store
 ngrok/ngrok.yml
 
 docker/data/
