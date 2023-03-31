@@ -95,7 +95,7 @@ export default function RadioGroup({
         radios.map((radioOptions) => (
           <Radio
             name={name}
-            key={radioOptions.value}
+            key={`${radioOptions.name}_${radioOptions.value}`}
             checked={field.value === radioOptions.value}
             onChange={(e) => {
               field?.onChange?.(radioOptions.value);
