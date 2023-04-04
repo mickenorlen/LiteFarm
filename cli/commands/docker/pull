@@ -1,0 +1,24 @@
+#!/bin/bash
+#####
+# NAME
+#   pull - update all remote container images
+#
+# SYNOPSIS
+#   pull [PULL_OPTION...] [SERVICE]
+#
+# PULL_OPTIONS
+#   Any options are passed to docker-compose pull
+
+# DESCRIPTION
+#   Updates project images from remote repositories
+#   This will not affect containers that build their own images
+#
+# EXAMPLES
+#   pull          Pull all images
+#   pull db       Pull db
+#   pull --help   Show docker-compose pull --help
+#
+# SEE ALSO
+#   compose
+#####
+lfcli compose pull "$@"

@@ -1,0 +1,43 @@
+#!/bin/bash
+#####
+# NAME
+#   ls - list docker info like containers and images
+#
+# SYNOPSIS
+#   ls [-a]
+# 
+# OPTIONS
+#   -a: show additional info about volumes and networks
+#
+# EXAMPLES
+#   ls      List containers and images
+#   ls -a   List containers, images, volumes and networks
+#####
+
+all=false
+
+while [[ $# != 0 ]]; do
+  case "$1" in
+  "-a")
+    all=true && shift 1;;
+  *)
+    lfraise_invalid_arg "$1";;
+  esac
+done
+
+lfsubtitle Containers
+docker ps -a
+echo
+lfsubtitle Images
+docker images
+
+
+if $all; then
+  echo
+  lfsubtitle Volumes
+  docker volume ls
+  echo
+  lfsubtitle Networks
+  docker network ls
+fi
+

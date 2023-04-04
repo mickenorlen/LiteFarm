@@ -1,0 +1,15 @@
+#####
+# NAME
+#   man - Read cli manual
+#
+# SYNOPSIS
+#   man
+#####
+source "$LITEFARM_CLI_HELPERS_DIR/help.sh"
+LITEFARM_VERBOSE=false # Hide any log messages when showing docs
+
+msg="$(get_pretty_cmd_file_docs "$LITEFARM_CLI_DIR/lfcli")"
+msg+="\n\n"
+msg+="$(lfcli help)"
+
+echo -e "$msg" | less

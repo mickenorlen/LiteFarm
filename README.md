@@ -22,7 +22,7 @@ LiteFarm is comprised of three applications which all reside in this monorepo.
 
 ## Docker
 
-Start developing quickly with `docker-compose`.
+Start developing quickly with `docker-compose`
 
 1. Install docker and start the docker service https://docs.docker.com/get-docker/
 2. Fork LiteFarm (recommended) https://github.com/LiteFarmOrg/LiteFarm
@@ -34,24 +34,15 @@ cd LiteFarm
 git remote add upstream git@github.com:LiteFarmOrg/LiteFarm.git
 cp packages/api/.env.default packages/api/.env
 cp packages/webapp/.env.default packages/webapp/.env
-# Add missing api keys to .env files as needed
+cp cli/.env.default cli/.env
+# Update env variables and add missing api keys as needed
 
-cli/lfcli help     # Show LiteFarm cli help
+cli/lfcli man      # Check the invocation section in the cli manual
+cli/lfcli help     # Show cli commands
 cli/lfcli install  # Install containers and dependencies
 cli/lfcli migrate  # Migrate db
-cli/lfcli web      # Start webapp dev server in 1st terminal
-cli/lfcli api      # Start api dev server in 2nd terminal
-```
-
-### Modifying system shell 
-To make working with `lfcli` more convenient, you can modify your shell startup script.
-
-Eg: `~/.bashrc` or `~/.zshrc`
-```BASH
-# Create an lfcli alias to make it globally available. You can give it any name you want
-alias lf="/path/to/LiteFarm/cli/lfcli"
-# Example config. Include adminer service for database management
-export LITEFARM_DOCKER_START_ADMINER=true 
+cli/lfcli web      # Serve webapp in 1st terminal
+cli/lfcli api      # Serve api in 2nd terminal
 ```
 
 ## Native

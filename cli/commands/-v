@@ -1,0 +1,12 @@
+#!/bin/bash
+#####
+# NAME
+#   -v - show verbose log output
+#
+# DESCRIPTION
+#   LITEFARM_VERBOSE=true   Enables lflog message output
+#
+# EXAMPLES
+#   lfcli -v web
+#####
+export LITEFARM_VERBOSE=true

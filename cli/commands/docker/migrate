@@ -1,0 +1,13 @@
+#!/bin/bash
+#####
+# NAME
+#   migrate - run api db migrations in a separate, detached container
+#
+# SYNOPSIS
+#   migrate
+#
+# SEE ALSO
+#   sh
+#####
+lftitle "Migrating db"
+lfcli sh -d api migrate

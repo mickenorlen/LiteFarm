@@ -1,0 +1,27 @@
+#!/bin/bash
+#####
+# NAME
+#   logs - show container logs
+#
+# SYNOPSIS
+#   logs [LOGS_OPTION...] [SERVICE]
+#
+# LOGS_OPTIONS
+#   Any options are passed to docker-compose logs
+
+# DESCRIPTION
+#   Note that when containers are started idle, eg when using commands idle/serve/web/api. 
+#   The log will only show the output of the idle command.
+#   In such cases relevant logs are instead shown directly from any running foreground process
+#   such as `sh web serve`
+#
+# EXAMPLES
+#   logs          Print project logs
+#   logs -f       Follow project logs
+#   logs db       Print db logs
+#   logs -f db    Follow db logs
+#
+# SEE ALSO
+#   docker-compose logs --help
+#####
+lfcli compose logs "$@"
